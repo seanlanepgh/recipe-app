@@ -14,12 +14,14 @@ return new class extends Migration
         Schema::create('recipes', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('instructions');
-            $table->string('thumbnail');
-            $table->string('youtube');
-            $table->string('source');
+            $table->string('category');
+            $table->string('area')->nullable();
+            $table->string('tags')->nullable();
+            $table->longText('instructions')->nullable();
+            $table->string('thumbnail')->nullable();
+            $table->string('youtube')->nullable();
+            $table->string('source')->nullable();
             $table->json("ingredients");
-            $table->json("measurements");
         });
     }
 

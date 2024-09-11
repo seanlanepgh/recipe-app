@@ -11,16 +11,16 @@ class Recipe extends Model
 
     public $table = 'recipes';
     //mass assignable items
+
     protected $fillable = [
         "name",
         "category",
         "area",
         "instructions",
         "thumbnail",
+        "tags",
         "ingredients",
-        "measurements",
         "source",
         "youtube"
-
     ];
 }
