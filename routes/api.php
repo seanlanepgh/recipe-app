@@ -12,6 +12,9 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::get('/recipes', [RecipeController::class, 'index']);
+Route::get('/recipes/latest', [RecipeController::class, 'latest']);
+Route::get('/recipes/random', [RecipeController::class, 'randomRecipe']);
+Route::get('/recipes/random10', [RecipeController::class, 'randomTen']);
 Route::get('/recipes/{id}', [RecipeController::class, 'show']);
 Route::post('/recipes', [RecipeController::class, 'store']);
 Route::put('/recipes/{id}', [RecipeController::class, 'update']);
