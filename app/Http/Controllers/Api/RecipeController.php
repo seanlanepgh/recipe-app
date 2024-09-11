@@ -36,4 +36,21 @@ class RecipeController extends Controller
         Recipe::destroy($id);
         return response()->json(null, 204);
     }
+
+    public function latest()
+    {
+        $recipes = Recipe::latest()->take(10)->get();;
+        return response()->json($recipes);
+    }
+
+    public function randomRecipe()
+    {
+        $recipe = Recipe::inRandomOrder()->first();
+        return response()->json($recipe);
+    }
+    public function randomTen()
+    {
+        $recipes = Recipe::inRandomOrder()->limit(10)->get();
+        return response()->json($recipes);
+    }
 }

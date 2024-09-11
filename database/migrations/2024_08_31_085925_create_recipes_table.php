@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('youtube')->nullable();
             $table->string('source')->nullable();
             $table->json("ingredients");
+            $table->timestamps();
         });
     }
 

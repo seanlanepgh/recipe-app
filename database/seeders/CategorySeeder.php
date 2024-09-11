@@ -34,7 +34,8 @@ class CategorySeeder extends Seeder
                 DB::table('categories')->insert([
                     'name' => $category['strCategory'],
                     'description' => $category['strCategoryDescription'],
-                    'thumbnail' => $category['strCategoryThumb']
+                    'thumbnail' => $category['strCategoryThumb'],
+                    'created_at' => now(),
                 ]);
             }
         }

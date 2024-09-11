@@ -63,6 +63,7 @@ class RecipeSeeder extends Seeder
                         'source' => $recipeJSON['strSource'],
                         'ingredients' => json_encode($ingredients),
                         'instructions' => $recipeJSON['strInstructions'],
+                        'created_at' => now(),
                     ]);
                 }
             }
