@@ -3,37 +3,39 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
+use App\Services\Interfaces\CategoryServiceInterface;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+    private $categoryService;
+
+    public function __construct(CategoryServiceInterface $categoryService)
+    {
+        $this->categoryService = $categoryService;
+    }
     public function index()
     {
-        $categories = Category::all();
-        return response()->json($categories);
+        return $this->categoryService->index();
     }
 
     public function show($id)
     {
-        $category = Category::find($id);
-        return response()->json($category);
+        return $this->categoryService->show($id);
     }
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        $category = Category::create($request->all());
-        return response()->json($category, 201);
+        return $this->categoryService->store($request);
     }
-    public function update(Request $request, $id)
+    public function update(CategoryRequest $request, $id)
     {
-        $category = Category::find($id);
-        $category->update($request->all());
-        return response()->json($category, 200);
+        return $this->categoryService->store($request, $id);
     }
 
     public function destroy($id)
     {
-        Category::destroy($id);
-        return response()->json(null, 204);
+        return $this->categoryService->destroy($id);
     }
 }

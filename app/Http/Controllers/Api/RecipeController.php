@@ -3,54 +3,52 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\RecipeRequest;
 use App\Models\Recipe;
-use Illuminate\Http\Request;
+use App\Services\Interfaces\RecipeServiceInterface;
 
 class RecipeController extends Controller
 {
+    private $recipeService;
+
+    public function __construct(RecipeServiceInterface $recipeService)
+    {
+        $this->recipeService = $recipeService;
+    }
     public function index()
     {
-        $recipes = Recipe::all();
-        return response()->json($recipes);
+        return $this->recipeService->index();
     }
 
     public function show($id)
     {
-        $recipe = Recipe::find($id);
-        return response()->json($recipe);
+        return $this->recipeService->show($id);
     }
-    public function store(Request $request)
+    public function store(RecipeRequest $request)
     {
-        $recipe = Recipe::create($request->all());
-        return response()->json($recipe, 201);
+        return $this->recipeService->store($request);
     }
-    public function update(Request $request, $id)
+    public function update(RecipeRequest $request, $id)
     {
-        $recipe = Recipe::find($id);
-        $recipe->update($request->all());
-        return response()->json($recipe, 200);
+        return $this->recipeService->store($request, $id);
     }
 
     public function destroy($id)
     {
-        Recipe::destroy($id);
-        return response()->json(null, 204);
+        return $this->recipeService->destroy($id);
     }
 
     public function latest()
     {
-        $recipes = Recipe::latest()->take(10)->get();;
-        return response()->json($recipes);
+        return $this->recipeService->latest();
     }
 
     public function randomRecipe()
     {
-        $recipe = Recipe::inRandomOrder()->first();
-        return response()->json($recipe);
+        return $this->recipeService->randomRecipe();
     }
     public function randomTen()
     {
-        $recipes = Recipe::inRandomOrder()->limit(10)->get();
-        return response()->json($recipes);
+        return $this->recipeService->randomTen();
     }
 }

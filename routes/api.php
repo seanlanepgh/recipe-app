@@ -2,14 +2,19 @@
 
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\RecipeController;
-use App\Http\Controllers\IngredientController;
-use App\Models\Ingredient;
+use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\IngredientController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
+
+Route::post('login', [UserController::class, 'index']);
+Route::post('register', [UserController::class, 'register'])->name('register');
+
+Route::post('logout', [UserController::class, 'logout'])->name('logout');
 
 Route::get('/recipes', [RecipeController::class, 'index']);
 Route::get('/recipes/latest', [RecipeController::class, 'latest']);

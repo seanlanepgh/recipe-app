@@ -1,39 +1,39 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Ingredient;
-use Illuminate\Http\Request;
+use App\Http\Requests\IngredientRequest;
+use App\Services\Interfaces\IngredientServiceInterface;
 
 class IngredientController extends Controller
 {
+    private $ingredientService;
+
+    public function __construct(IngredientServiceInterface $ingredientService)
+    {
+        $this->ingredientService = $ingredientService;
+    }
     public function index()
     {
-        $categories = Ingredient::all();
-        return response()->json($categories);
+        return $this->ingredientService->index();
     }
 
     public function show($id)
     {
-        $category = Ingredient::find($id);
-        return response()->json($category);
+        return $this->ingredientService->show($id);
     }
-    public function store(Request $request)
+    public function store(IngredientRequest $request)
     {
-        $category = Ingredient::create($request->all());
-        return response()->json($category, 201);
+        return $this->ingredientService->store($request);
     }
-    public function update(Request $request, $id)
+    public function update(IngredientRequest $request, $id)
     {
-        $category = Ingredient::find($id);
-        $category->update($request->all());
-        return response()->json($category, 200);
+        return $this->ingredientService->store($request, $id);
     }
 
     public function destroy($id)
     {
-        Ingredient::destroy($id);
-        return response()->json(null, 204);
+        return $this->ingredientService->destroy($id);
     }
 }
