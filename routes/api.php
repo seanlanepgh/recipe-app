@@ -15,7 +15,7 @@ Route::post('login', [UserController::class, 'index']);
 Route::post('register', [UserController::class, 'register'])->name('register');
 
 Route::post('logout', [UserController::class, 'logout'])->name('logout');
-
+Route::get('/recipes/search', [RecipeController::class, 'search']);
 Route::get('/recipes', [RecipeController::class, 'index']);
 Route::get('/recipes/latest', [RecipeController::class, 'latest']);
 Route::get('/recipes/random', [RecipeController::class, 'randomRecipe']);

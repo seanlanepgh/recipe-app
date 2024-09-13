@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RecipeRequest;
-use App\Models\Recipe;
+use App\Http\Requests\RecipeSearchRequest;
 use App\Services\Interfaces\RecipeServiceInterface;
 
 class RecipeController extends Controller
@@ -18,6 +18,11 @@ class RecipeController extends Controller
     public function index()
     {
         return $this->recipeService->index();
+    }
+    public function search(RecipeSearchRequest $request)
+    {
+        $request->validated();
+        return $this->recipeService->search($request);
     }
 
     public function show($id)

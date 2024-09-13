@@ -3,13 +3,41 @@
 namespace App\Repositories;
 
 use App\Http\Requests\RecipeRequest;
+use App\Http\Requests\RecipeSearchRequest;
 use App\Models\Recipe;
 
 class RecipeRepository implements Interfaces\RecipeRepositoryInterface
 {
+
     public function index()
     {
-        return Recipe::all();
+        return Recipe::query()->paginate(15);
+    }
+
+    public function search(RecipeSearchRequest $request)
+    {
+        $query = Recipe::query();
+
+        if ($name = $request->input('name')) {
+            $query->where('name', 'like', "$name%");
+        }
+
+        if ($category = $request->input('category')) {
+            $query->where('category', $category);
+        }
+
+        if ($area = $request->input('area')) {
+            $query->where('area', $area);
+        }
+
+        if ($ingredients = $request->input('ingredients', [])) {
+            foreach ($ingredients as $ingredient) {
+                $query->whereJsonContains('ingredients', [['ingredient' => $ingredient]]);
+            }
+        }
+
+        //dd($query);
+        return $query->paginate(15);
     }
 
     public function show($id)
@@ -35,7 +63,7 @@ class RecipeRepository implements Interfaces\RecipeRepositoryInterface
 
     public function latest()
     {
-        return Recipe::latest()->take(10)->get();
+        return Recipe::latest()->take(15)->get();
     }
 
     public function randomRecipe()

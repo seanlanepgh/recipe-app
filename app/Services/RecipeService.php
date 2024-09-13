@@ -4,6 +4,7 @@
 namespace App\Services;
 
 use App\Http\Requests\RecipeRequest;
+use App\Http\Requests\RecipeSearchRequest;
 use App\Http\Resources\Recipe;
 use App\Repositories\Interfaces\RecipeRepositoryInterface;
 
@@ -20,6 +21,11 @@ class RecipeService implements Interfaces\RecipeServiceInterface
     public function index()
     {
         return Recipe::collection($this->recipeRepository->index());
+    }
+
+    public function search(RecipeSearchRequest $request)
+    {
+        return Recipe::collection($this->recipeRepository->search($request));
     }
     public function show($id)
     {
